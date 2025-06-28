@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const KidneyAIApp());
@@ -23,6 +25,9 @@ class KidneyAIApp extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/register': (context) => const RegisterScreen(),
+        // '/home': (context) => const HomeScreen(userName: 'Adrián'),
       },
     );
   }

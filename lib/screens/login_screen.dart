@@ -1,4 +1,4 @@
-import 'mainMenu.dart';
+import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,30 +34,27 @@ class _LoginScreenState extends State<LoginScreen> {
       'http://24.144.84.85:8081/api/usuarios/login?correo=$correo&password=$password',
     );
 
-try {
-  final response = await http.post(url);
+    try {
+      final response = await http.post(url);
 
-  if (response.statusCode == 200) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Inicio de sesión exitoso')),
-    );
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Inicio de sesión exitoso')),
+        );
 
-    // Navegar al menú principal
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainMenu()),
-    );
-  } else {
-    setState(
-      () => _errorMessage = 'Credenciales inválidas o usuario no encontrado',
-    );
-  }
-} catch (e) {
-  setState(() => _errorMessage = 'Error de conexión: $e');
-} finally {
-  setState(() => _isLoading = false);
-}
-
+        // Navegar al menú principal
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        setState(
+          () =>
+              _errorMessage = 'Credenciales inválidas o usuario no encontrado',
+        );
+      }
+    } catch (e) {
+      setState(() => _errorMessage = 'Error de conexión: $e');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -129,7 +126,7 @@ try {
                     ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Olvidé contraseña
+                      // TODO: Navegar a "olvidé contraseña"
                     },
                     child: const Text(
                       '¿Olvidaste tu contraseña?',
@@ -142,7 +139,7 @@ try {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                // TODO: Navegar a pantalla de registro
+                Navigator.pushNamed(context, '/register');
               },
               child: const Text.rich(
                 TextSpan(
