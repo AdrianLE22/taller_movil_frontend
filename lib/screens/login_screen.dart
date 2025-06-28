@@ -1,6 +1,6 @@
-import 'home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,28 +30,32 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = '';
     });
 
-    final url = Uri.parse(
-      'http://24.144.84.85:8081/api/usuarios/login?correo=$correo&password=$password',
-    );
-
     try {
-      final response = await http.post(url);
+      final jsonStr = await rootBundle.loadString('assets/data/usuarios.json');
+      final List<dynamic> usuarios = jsonDecode(jsonStr);
 
-      if (response.statusCode == 200) {
+      final usuarioValido = usuarios.firstWhere(
+        (usuario) =>
+            usuario['correo'].toString().toLowerCase() ==
+                correo.toLowerCase() &&
+            usuario['password'].toString() == password,
+        orElse: () => null,
+      );
+
+      if (usuarioValido != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Inicio de sesión exitoso')),
+          SnackBar(content: Text('Bienvenido, ${usuarioValido['nombre']}')),
         );
 
-        // Navegar al menú principal
+        await Future.delayed(const Duration(seconds: 1));
+        if (!context.mounted) return;
+
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        setState(
-          () =>
-              _errorMessage = 'Credenciales inválidas o usuario no encontrado',
-        );
+        setState(() => _errorMessage = 'Credenciales inválidas');
       }
     } catch (e) {
-      setState(() => _errorMessage = 'Error de conexión: $e');
+      setState(() => _errorMessage = 'Error al cargar datos locales: $e');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -102,7 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   _isLoading
                       ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          onPressed: _login,
+                          onPressed: () async {
+                            await _login();
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                             padding: const EdgeInsets.symmetric(
@@ -126,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Navegar a "olvidé contraseña"
+                      // TODO: recuperar contraseña
                     },
                     child: const Text(
                       '¿Olvidaste tu contraseña?',

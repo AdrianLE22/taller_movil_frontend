@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nombre": "German",
+    "apellidos": "Callupe",
+    "password": "123456",
+    "correo": "gcallupe@mail.com",
+    "fechaNacimiento": "01/01/2000",
+    "genero": 1,
+    "edad": 25
+  },
+  {
+    "id": 2,
+    "nombre": "Elvis",
+    "apellidos": "Manco",
+    "password": "123456",
+    "correo": "emanco@mail.com",
+    "fechaNacimiento": "01/01/2000",
+    "genero": 1,
+    "edad": 25
+  },
+  {
+    "id": 3,
+    "nombre": "Adrian",
+    "apellidos": "Lizarbe",
+    "password": "123456",
+    "correo": "alizarbe@mail.com",
+    "fechaNacimiento": "01/01/2000",
+    "genero": 1,
+    "edad": 25
+  }
+]
