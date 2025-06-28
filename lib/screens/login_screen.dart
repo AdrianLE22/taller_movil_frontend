@@ -1,6 +1,7 @@
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 try {
   final response = await http.post(url);
 
+
   if (response.statusCode == 200) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Inicio de sesión exitoso')),
@@ -57,6 +59,7 @@ try {
 } finally {
   setState(() => _isLoading = false);
 }
+
 
   }
 
@@ -129,7 +132,7 @@ try {
                     ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Olvidé contraseña
+                      // TODO: Navegar a "olvidé contraseña"
                     },
                     child: const Text(
                       '¿Olvidaste tu contraseña?',
@@ -142,7 +145,7 @@ try {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                // TODO: Navegar a pantalla de registro
+                Navigator.pushNamed(context, '/register');
               },
               child: const Text.rich(
                 TextSpan(
