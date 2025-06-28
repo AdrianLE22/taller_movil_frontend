@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'home_screen.dart'; // Asegúrate de tener este archivo creado
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,22 +38,33 @@ class _LoginScreenState extends State<LoginScreen> {
       final response = await http.post(url);
 
       if (response.statusCode == 200) {
-        // Login exitoso
+        if (!mounted) return;
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Inicio de sesión exitoso')),
         );
 
-        // TODO: Navegar a la siguiente pantalla, ejemplo:
-        // Navigator.pushNamed(context, '/home');
+        // 🚀 Redirigir al menú principal
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(
+              userName: 'Adrián',
+            ), // o usa correo si no tienes nombre
+          ),
+        );
       } else {
+        if (!mounted) return;
         setState(
           () =>
               _errorMessage = 'Credenciales inválidas o usuario no encontrado',
         );
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() => _errorMessage = 'Error de conexión: $e');
     } finally {
+      if (!mounted) return;
       setState(() => _isLoading = false);
     }
   }
@@ -126,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Olvidé contraseña
+                      // TODO: Navegar a "olvidé contraseña"
                     },
                     child: const Text(
                       '¿Olvidaste tu contraseña?',
@@ -139,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                // TODO: Navegar a pantalla de registro
+                Navigator.pushNamed(context, '/register');
               },
               child: const Text.rich(
                 TextSpan(
