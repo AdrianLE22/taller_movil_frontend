@@ -1,6 +1,7 @@
+import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'home_screen.dart'; // Asegúrate de tener este archivo creado
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,39 +35,32 @@ class _LoginScreenState extends State<LoginScreen> {
       'http://24.144.84.85:8081/api/usuarios/login?correo=$correo&password=$password',
     );
 
-    try {
-      final response = await http.post(url);
+try {
+  final response = await http.post(url);
 
-      if (response.statusCode == 200) {
-        if (!mounted) return;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Inicio de sesión exitoso')),
-        );
+  if (response.statusCode == 200) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Inicio de sesión exitoso')),
+    );
 
-        // 🚀 Redirigir al menú principal
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(
-              userName: 'Adrián',
-            ), // o usa correo si no tienes nombre
-          ),
-        );
-      } else {
-        if (!mounted) return;
-        setState(
-          () =>
-              _errorMessage = 'Credenciales inválidas o usuario no encontrado',
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
-      setState(() => _errorMessage = 'Error de conexión: $e');
-    } finally {
-      if (!mounted) return;
-      setState(() => _isLoading = false);
-    }
+    // Navegar al menú principal
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  } else {
+    setState(
+      () => _errorMessage = 'Credenciales inválidas o usuario no encontrado',
+    );
+  }
+} catch (e) {
+  setState(() => _errorMessage = 'Error de conexión: $e');
+} finally {
+  setState(() => _isLoading = false);
+}
+
+
   }
 
   @override
