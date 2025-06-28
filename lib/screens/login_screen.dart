@@ -1,4 +1,4 @@
-import 'mainMenu.dart';
+import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -45,7 +45,7 @@ try {
     // Navegar al menú principal
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const MainMenu()),
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
     );
   } else {
     setState(
