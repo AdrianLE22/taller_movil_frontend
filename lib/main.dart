@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
-import 'screens/login_screen.dart'; // Asegúrate de tener este archivo creado
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const KidneyAIApp());

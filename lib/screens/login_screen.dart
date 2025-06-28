@@ -45,7 +45,7 @@ try {
     // Navegar al menú principal
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const MainMenu()),
     );
   } else {
     setState(
