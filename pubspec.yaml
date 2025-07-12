@@ -58,7 +58,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/logo_kidneyai.png
-    - assets/data/usuarios.json
+    - assets/ajustes_logo.png
+    - assets/educacion_logo.png
+    - assets/form_logo.png
+    - assets/rinon_logo.png
+    - assets/factores_logo.png
+    - assets/prevenir_logo.png
+    - assets/sabias_logo.png
+    - assets/sintomas_logo.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

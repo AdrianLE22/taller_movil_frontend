@@ -12,119 +12,126 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Color(0xFFBFC7E2);
-    const cardColor = Color(0xFFE3E3E3);
 
     return Scaffold(
       backgroundColor: const Color(0xFFEFEFF4),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: Container(
-          color: appBarColor,
-          padding: const EdgeInsets.only(top: 70, left: 16, right: 16),
-          child: Row(
-            children: [
-              Icon(Icons.favorite, color: Colors.redAccent, size: 36),
-              const SizedBox(width: 8),
-              const Text(
-                'KidneyAI',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              const Icon(Icons.account_circle, color: Colors.white, size: 32),
-            ],
-          ),
-        ),
-      ),
       body: Column(
         children: [
+          // Encabezado
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: appBarColor,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(16, 40, 16, 20),
             child: Row(
               children: [
-                Text(
-                  'Bienvenido!',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset(
+                    'assets/logo_kidneyai.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    'KidneyAI',
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const Spacer(),
-                const Icon(Icons.work_outline, size: 28, color: Colors.grey),
+                const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, color: Colors.black),
+                ),
               ],
             ),
           ),
+
+          // Bienvenida
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Text(
+             // 'Bienvenido, $nombre',
+              'Bienvenido!',
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+
+          // Menú
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 MenuCard(
-                  icon: Icons.health_and_safety,
+                  iconPath: 'assets/rinon_logo.png',
                   iconColor: Colors.redAccent,
                   title: 'Predicción CKD',
-                  subtitle:
-                      'Detección temprana de la enfermedad renal crónica.',
+                  subtitle: 'Detección temprana de la enfermedad renal crónica.',
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const PrediccionScreen(),
-                      ),
+                      MaterialPageRoute(builder: (context) => const PrediccionScreen()),
                     );
                   },
                 ),
                 MenuCard(
-                  icon: Icons.assignment,
+                  iconPath: 'assets/form_logo.png',
                   iconColor: Colors.indigo,
                   title: 'Formulario clínico',
-                  subtitle:
-                      'Complete su información clínica para la predicción.',
+                  subtitle: 'Complete su información clínica para la predicción.',
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const FormClinico(),
-                      ),
+                      MaterialPageRoute(builder: (context) => const FormClinico()),
                     );
                   },
                 ),
                 MenuCard(
-                  icon: Icons.menu_book,
+                  iconPath: 'assets/educacion_logo.png',
                   iconColor: Colors.indigo,
                   title: 'Educación',
-                  subtitle:
-                      'Aprende más acerca de la enfermedad renal crónica.',
+                  subtitle: 'Aprende más acerca de la enfermedad renal crónica.',
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const EduScreen(),
-                      ),
+                      MaterialPageRoute(builder: (context) => const EduScreen()),
                     );
                   },
                 ),
                 MenuCard(
-                  icon: Icons.settings,
+                  iconPath: 'assets/ajustes_logo.png',
                   iconColor: Colors.grey,
                   title: 'Ajustes',
-                  subtitle:
-                      'Ajustes de preferencia de la aplicación y perfil de usuario.',
+                  subtitle: 'Ajustes de preferencia de la aplicación y perfil de usuario.',
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const AjustesScreen(),
-                      ),
+                      MaterialPageRoute(builder: (context) => const AjustesScreen()),
                     );
                   },
                 ),
               ],
             ),
           ),
+
+          // Footer
           Container(
             color: appBarColor,
             width: double.infinity,
@@ -142,8 +149,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// SOLO MODIFICADO: altura, fuente y padding
 class MenuCard extends StatelessWidget {
-  final IconData icon;
+  final String iconPath;
   final Color iconColor;
   final String title;
   final String subtitle;
@@ -151,7 +159,7 @@ class MenuCard extends StatelessWidget {
 
   const MenuCard({
     super.key,
-    required this.icon,
+    required this.iconPath,
     required this.iconColor,
     required this.title,
     required this.subtitle,
@@ -160,39 +168,59 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFFE3E3E3),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      elevation: 2,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Icon(icon, size: 40, color: iconColor),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: iconColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(subtitle, style: const TextStyle(fontSize: 14)),
-                  ],
+    final screenHeight = MediaQuery.of(context).size.height;
+    final cardHeight = (screenHeight - 280) / 4; // Distribuye el alto entre las 4 tarjetas
+
+    return SizedBox(
+      height: cardHeight,
+      child: Card(
+        color: const Color(0xFFE3E3E3),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        elevation: 3,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  child: Image.asset(
+                    iconPath,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              const Icon(Icons.arrow_forward_ios, size: 16),
-            ],
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: iconColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios, size: 20),
+              ],
+            ),
           ),
         ),
       ),
