@@ -1,7 +1,6 @@
-import 'home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'home_screen.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,36 +30,35 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = '';
     });
 
-    final url = Uri.parse(
-      'http://24.144.84.85:8081/api/usuarios/login?correo=$correo&password=$password',
-    );
+    try {
+      final jsonStr = await rootBundle.loadString('assets/data/usuarios.json');
+      final List<dynamic> usuarios = jsonDecode(jsonStr);
 
-try {
-  final response = await http.post(url);
+      final usuarioValido = usuarios.firstWhere(
+        (usuario) =>
+            usuario['correo'].toString().toLowerCase() ==
+                correo.toLowerCase() &&
+            usuario['password'].toString() == password,
+        orElse: () => null,
+      );
 
+      if (usuarioValido != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bienvenido, ${usuarioValido['nombre']}')),
+        );
 
-  if (response.statusCode == 200) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Inicio de sesión exitoso')),
-    );
+        await Future.delayed(const Duration(seconds: 1));
+        if (!context.mounted) return;
 
-    // Navegar al menú principal
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
-    );
-  } else {
-    setState(
-      () => _errorMessage = 'Credenciales inválidas o usuario no encontrado',
-    );
-  }
-} catch (e) {
-  setState(() => _errorMessage = 'Error de conexión: $e');
-} finally {
-  setState(() => _isLoading = false);
-}
-
-
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        setState(() => _errorMessage = 'Credenciales inválidas');
+      }
+    } catch (e) {
+      setState(() => _errorMessage = 'Error al cargar datos locales: $e');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -108,7 +106,9 @@ try {
                   _isLoading
                       ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          onPressed: _login,
+                          onPressed: () async {
+                            await _login();
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                             padding: const EdgeInsets.symmetric(
@@ -132,7 +132,7 @@ try {
                     ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Navegar a "olvidé contraseña"
+                      // TODO: recuperar contraseña
                     },
                     child: const Text(
                       '¿Olvidaste tu contraseña?',

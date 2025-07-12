@@ -34,11 +34,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Icon(
-                Icons.account_circle,
-                color: Colors.white,
-                size: 32,
-              ),
+              const Icon(Icons.account_circle, color: Colors.white, size: 32),
             ],
           ),
         ),
@@ -70,12 +66,14 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.health_and_safety,
                   iconColor: Colors.redAccent,
                   title: 'Predicción CKD',
-                  subtitle: 'Detección temprana de la enfermedad renal crónica.',
+                  subtitle:
+                      'Detección temprana de la enfermedad renal crónica.',
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PrediccionScreen()),
+                        builder: (context) => const PrediccionScreen(),
+                      ),
                     );
                   },
                 ),
@@ -83,12 +81,14 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.assignment,
                   iconColor: Colors.indigo,
                   title: 'Formulario clínico',
-                  subtitle: 'Complete su información clínica para la predicción.',
+                  subtitle:
+                      'Complete su información clínica para la predicción.',
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const FormClinico()),
+                        builder: (context) => const FormClinico(),
+                      ),
                     );
                   },
                 ),
@@ -96,12 +96,14 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.menu_book,
                   iconColor: Colors.indigo,
                   title: 'Educación',
-                  subtitle: 'Aprende más acerca de la enfermedad renal crónica.',
+                  subtitle:
+                      'Aprende más acerca de la enfermedad renal crónica.',
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EduScreen()),
+                        builder: (context) => const EduScreen(),
+                      ),
                     );
                   },
                 ),
@@ -115,7 +117,8 @@ class HomeScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AjustesScreen()),
+                        builder: (context) => const AjustesScreen(),
+                      ),
                     );
                   },
                 ),
@@ -184,10 +187,7 @@ class MenuCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(fontSize: 14),
-                    ),
+                    Text(subtitle, style: const TextStyle(fontSize: 14)),
                   ],
                 ),
               ),

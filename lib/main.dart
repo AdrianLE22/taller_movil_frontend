@@ -17,9 +17,10 @@ class KidneyAIApp extends StatelessWidget {
       title: 'KidneyAI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         scaffoldBackgroundColor: Colors.white,
         textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
+        useMaterial3: true, // para adoptar Material Design 3 si deseas
       ),
       initialRoute: '/',
       routes: {
@@ -27,7 +28,6 @@ class KidneyAIApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/register': (context) => const RegisterScreen(),
-       // '/home': (context) => const HomeScreen(userName: 'Adrián'),
       },
     );
   }
